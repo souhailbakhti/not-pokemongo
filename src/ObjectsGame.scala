@@ -81,6 +81,7 @@ class ObjectsGame extends BasicGame("") with Observer{
     }
   }
 
+  //mettre à jour le camera
   private def updateCamera(container: GameContainer) {
     val w = container.getWidth / 4
     if (this.player.getX > this.xCamera + w) {

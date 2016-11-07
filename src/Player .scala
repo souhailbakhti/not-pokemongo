@@ -47,6 +47,7 @@ class Player(private var map: Map) {
     g.drawAnimation(animations(direction + (if (moving) 4 else 0)), x.toInt - 32, y.toInt - 60)
   }
 
+  // mettre à jour le jeu à la vitesse de l'ordi
   def update(delta: Int) {
     if (this.moving) {
       val futurX = getFuturX(delta)
@@ -69,8 +70,7 @@ class Player(private var map: Map) {
       case 3 => futurX = this.x + .1f * delta
       case _ =>
     }
-    println(futurX)
-    futurX
+    return futurX
   }
 
   private def getFuturY(delta: Int): Float = {

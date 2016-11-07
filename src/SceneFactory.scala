@@ -1,5 +1,6 @@
+import org.newdawn.slick.Music
 
-
-class SceneFactory {
-  
+abstract class SceneFactory {
+  def createMap:Map
+  def createMusic:Music
 }
