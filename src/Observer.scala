@@ -1,0 +1,5 @@
+
+
+trait Observer {
+  def notifyOberver()
+}

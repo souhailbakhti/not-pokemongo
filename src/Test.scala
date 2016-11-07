@@ -16,7 +16,7 @@ import org.newdawn.slick.tiled.TiledMap;
 object Test {
 
   def main(args: Array[String]) {
-    new AppGameContainer(new CharacterGame(), 800, 600, false)
+    new AppGameContainer(new ObjectsGame(), 800, 600, false)
       .start()
   }
 }
