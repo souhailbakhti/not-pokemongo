@@ -28,7 +28,7 @@ class Player(private var map: Map) {
     this.animations(7) = loadAnimation(spriteSheet, 1, 9, 3)
   }
 
-  
+  //afficher spriteSheet à l'initialisation
   private def loadAnimation(spriteSheet: SpriteSheet,
                             startX: Int,
                             endX: Int,
@@ -40,7 +40,7 @@ class Player(private var map: Map) {
     animation
   }
 
-  //
+  //Affichage de la fenetre
   def render(g: Graphics) {
     g.setColor(new Color(0, 0, 0, .5f))
     g.fillOval(x.toInt - 16, y.toInt - 8, 32, 16)

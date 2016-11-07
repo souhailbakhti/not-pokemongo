@@ -26,7 +26,7 @@ class ObjectsGame extends BasicGame("") with Observer{
     this.container = container
     this.map.init()
     this.player.init()
-    val background = new Music("src/lost-in-the-meadows.ogg")
+    val background = new Music("src/Music/lost-in-the-meadows.ogg")
     background.loop()
   }
 
@@ -96,6 +96,8 @@ class ObjectsGame extends BasicGame("") with Observer{
     }
   }
 
+  
+  // control clavier
   override def keyReleased(key: Int, c: Char) {
     this.player.setMoving(false)
     if (Input.KEY_ESCAPE == key) {
