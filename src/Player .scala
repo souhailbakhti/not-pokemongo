@@ -9,13 +9,16 @@ class Player(private var map: Map) {
   private var x: Float = 300
   private var y: Float = 300
   private var direction: Int = 2
+  // le personnage monte se trouve sur un escaliser
   private var onStair: Boolean = false
   private var moving: Boolean = false
   var currentState:State =_
   var vie:Int=0
   
+  
   private var animations: Array[Animation] = new Array[Animation](8)
 
+  
   def init() {
     val spriteSheet = new SpriteSheet("src/character.png", 64, 64)
     this.animations(0) = loadAnimation(spriteSheet, 0, 1, 0)
@@ -64,7 +67,6 @@ class Player(private var map: Map) {
 
   private def getFuturX(delta: Int): Float = {
     var futurX:Float = x
-    println(direction)
     direction match {
       case 1 => futurX = this.x - .1f * delta
       case 3 => futurX = this.x + .1f * delta
@@ -87,7 +89,9 @@ class Player(private var map: Map) {
     }
     return futurY
   }
-
+  
+  
+//getters setters
   def getX(): Float = x
 
   def setX(x: Float) {
