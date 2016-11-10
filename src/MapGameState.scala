@@ -33,8 +33,6 @@ class MapGameState extends BasicGameState {
     yCamera= player.getY
     var controller: PlayerController = new PlayerController(this.player);
     container.getInput().addKeyListener(controller);
-
-    //val background = new Music("src/Music/lost-in-the-meadows.ogg")
     music.loop()
   }
 
@@ -46,10 +44,8 @@ class MapGameState extends BasicGameState {
   }
 
   override def update(container: GameContainer, game: StateBasedGame, delta: Int) {
-    //println(delta)
     updateTrigger()
     this.player.update(delta)
-    //println("update")
     updateCamera(container)
   }
 
