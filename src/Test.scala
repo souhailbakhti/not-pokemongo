@@ -10,12 +10,13 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
-
-
+import org.newdawn.slick.Game;
 
 object Test {
-   def main(args: Array[String]) {
- new AppGameContainer(new StateGame(), 800, 600, false).start();
+  def main(args: Array[String]) {
+    new AppGameContainer(new StateGame(), 800, 700, false).start();
+   
+
   }
 }
 

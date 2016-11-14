@@ -4,12 +4,11 @@ import org.newdawn.slick.Graphics
 import org.newdawn.slick.SlickException
 import org.newdawn.slick.SpriteSheet
 
-class Player(private var map: Map) {
+class Player(private var map: Map) extends Character{
 
   private var x: Float = 300
   private var y: Float = 300
   private var direction: Int = 2
-  // le personnage monte se trouve sur un escaliser
   private var onStair: Boolean = false
   private var moving: Boolean = false
   var currentState:State =_
@@ -31,7 +30,7 @@ class Player(private var map: Map) {
     this.animations(7) = loadAnimation(spriteSheet, 1, 9, 3)
   }
 
-  //afficher spriteSheet à l'initialisation
+  //set spriteSheet 
   private def loadAnimation(spriteSheet: SpriteSheet,
                             startX: Int,
                             endX: Int,
@@ -43,14 +42,14 @@ class Player(private var map: Map) {
     animation
   }
 
-  //Affichage de la fenetre
+  //display window
   def render(g: Graphics) {
     g.setColor(new Color(0, 0, 0, .5f))
     g.fillOval(x.toInt - 16, y.toInt - 8, 32, 16)
     g.drawAnimation(animations(direction + (if (moving) 4 else 0)), x.toInt - 32, y.toInt - 60)
   }
 
-  // mettre à jour le jeu à la vitesse de l'ordi
+  // update
   def update(delta: Int) {
     if (this.moving) {
       val futurX = getFuturX(delta)
