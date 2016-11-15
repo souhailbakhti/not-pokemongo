@@ -1,43 +1,48 @@
-import org.newdawn.slick.AppGameContainer
-import org.newdawn.slick.BasicGame
-import org.newdawn.slick.GameContainer
-import org.newdawn.slick.Graphics
-import org.newdawn.slick.Input
-import org.newdawn.slick.Music
-import org.newdawn.slick.SlickException
-import java.util
+package client
 
-class ObjectsGame extends BasicGame("") with Observer{
+import org.newdawn.slick.{GameContainer, Graphics, Music}
+import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
+class MapGameState extends BasicGameState {
+  private val ID = 2
 
   private var container: GameContainer = _
 
-  private var map: Map = new Map1()
+  private var map: Map = _
 
-  private var player: Player = new Player(map)
+  private var music: Music = _
 
-  private var xCamera: Float = player.getX
+  private var player: Player = _
 
-  private var yCamera: Float = player.getY
-  
-  def notifyOberver(){}
+  private var xCamera: Float =_
 
-  override def init(container: GameContainer) {
+  private var yCamera: Float =_
+
+  def notifyOberver() {}
+
+  override def init(container: GameContainer, game: StateBasedGame) {
     this.container = container
+    var sceneFactory: SceneFactory = new ScenePrincipaleFactory()
+    this.map = sceneFactory.createMap
+    music = sceneFactory.createMusic
+    player = new Player(map)
     this.map.init()
     this.player.init()
-    val background = new Music("src/Music/lost-in-the-meadows.ogg")
-    background.loop()
+    xCamera=player.getX
+    yCamera= player.getY
+    var controller: PlayerController = new PlayerController(this.player);
+    container.getInput().addKeyListener(controller);
+    music.loop()
   }
 
-  override def render(container: GameContainer, g: Graphics) {
+  override def render(container: GameContainer, game: StateBasedGame, g: Graphics) {
     g.translate(container.getWidth / 2 - xCamera.toInt, container.getHeight / 2 - yCamera.toInt)
     this.map.renderBackground()
     this.player.render(g)
     this.map.renderForeground()
   }
 
-  override def update(container: GameContainer, delta: Int) {
+  override def update(container: GameContainer, game: StateBasedGame, delta: Int) {
     updateTrigger()
     this.player.update(delta)
     updateCamera(container)
@@ -77,11 +82,10 @@ class ObjectsGame extends BasicGame("") with Observer{
     teleport(objectID)
     val newMap = this.map.getObjectProperty(objectID, "dest-map", "undefined")
     if ("undefined" != newMap) {
-      this.map.changeMap("src/" + newMap)
+      this.map.changeMap(newMap)
     }
   }
 
-  //mettre à jour le camera
   private def updateCamera(container: GameContainer) {
     val w = container.getWidth / 4
     if (this.player.getX > this.xCamera + w) {
@@ -96,32 +100,7 @@ class ObjectsGame extends BasicGame("") with Observer{
       this.yCamera = this.player.getY + h
     }
   }
+  override def getID(): Int = ID
+}
 
   
-  // control clavier
-  override def keyReleased(key: Int, c: Char) {
-    this.player.setMoving(false)
-    if (Input.KEY_ESCAPE == key) {
-      this.container.exit()
-    }
-  }
-
-  override def keyPressed(key: Int, c: Char): Unit = key match {
-    case Input.KEY_UP =>
-      this.player.setDirection(0)
-      this.player.setMoving(true)
-
-    case Input.KEY_LEFT =>
-      this.player.setDirection(1)
-      this.player.setMoving(true)
-
-    case Input.KEY_DOWN =>
-      this.player.setDirection(2)
-      this.player.setMoving(true)
-
-    case Input.KEY_RIGHT =>
-      this.player.setDirection(3)
-      this.player.setMoving(true)
-
-  }
-}

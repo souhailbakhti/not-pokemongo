@@ -1,7 +1,6 @@
+package client
 
-import org.newdawn.slick.Color
-import org.newdawn.slick.Image
-import org.newdawn.slick.SlickException
+
 import org.newdawn.slick.tiled.TiledMap
 
 
@@ -10,7 +9,7 @@ class Map1 extends Map() {
  // private var tiledMap: TiledMap = _
   
   override def init() {
-    this.tiledMap = new TiledMap("src/exemple-change-map.tmx")
+    this.tiledMap = new TiledMap(Resources.resourcePath("exemple-change-map.tmx"))
   }
 
   override def renderBackground() {

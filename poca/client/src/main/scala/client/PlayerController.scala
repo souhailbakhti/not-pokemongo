@@ -1,6 +1,6 @@
-import org.newdawn.slick.KeyListener
-import org.newdawn.slick.ControlledInputReciever
-import org.newdawn.slick.Input
+package client
+
+import org.newdawn.slick.{Input, KeyListener}
 
 class PlayerController(private var player: Player) extends KeyListener {
   

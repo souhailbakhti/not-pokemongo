@@ -1,3 +1,4 @@
+package client
 
 import org.newdawn.slick.tiled.TiledMap;
 

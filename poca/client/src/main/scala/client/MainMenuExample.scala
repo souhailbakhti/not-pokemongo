@@ -1,15 +1,10 @@
-import java.awt.Font
-import org.newdawn.slick.state.BasicGameState
-import org.newdawn.slick.state.StateBasedGame
-import org.newdawn.slick.GameContainer
-import org.newdawn.slick.Graphics
-import org.newdawn.slick.BasicGame
-import org.newdawn.slick.TrueTypeFont
-import org.newdawn.slick.Color
-import org.newdawn.slick.Input
-import org.newdawn.slick.AppGameContainer;
+package client
 
-class MainMenuExample extends BasicGame("Slick2D Main Menu Example") {
+import java.awt.Font
+
+import org.newdawn.slick._;
+
+class MainMenuExample extends BasicGame("POCA Main Menu") {
   private val NOCHOICES = 5
 
   private val START = 0

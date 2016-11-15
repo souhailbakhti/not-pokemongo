@@ -1,8 +1,6 @@
-import org.newdawn.slick.Animation
-import org.newdawn.slick.Color
-import org.newdawn.slick.Graphics
-import org.newdawn.slick.SlickException
-import org.newdawn.slick.SpriteSheet
+package client
+
+import org.newdawn.slick.{Animation, Color, Graphics, SpriteSheet}
 
 class Player(private var map: Map) extends Character{
 
@@ -19,7 +17,7 @@ class Player(private var map: Map) extends Character{
 
   
   def init() {
-    val spriteSheet = new SpriteSheet("src/character.png", 64, 64)
+    val spriteSheet = new SpriteSheet(Resources.resourcePath("character.png"), 64, 64)
     this.animations(0) = loadAnimation(spriteSheet, 0, 1, 0)
     this.animations(1) = loadAnimation(spriteSheet, 0, 1, 1)
     this.animations(2) = loadAnimation(spriteSheet, 0, 1, 2)

@@ -1,31 +1,27 @@
 package client
-import scala.swing._
-import scala.swing.event._
 
-/**
-  * Main of the POCA client.
-  */
-object Main extends SimpleSwingApplication {
-  val exitButton = new Button ("Exit")
+import java.io.File
+import java.lang.reflect.Field
+import java.net.URLDecoder
+import java.nio.file.{Files, Paths}
 
-  listenTo(exitButton)
-  reactions += {
-    case ButtonClicked(b) =>
-      quit()
+import org.newdawn.slick.AppGameContainer
+
+object Main {
+  /**
+    * Set the library path to find our native libraries
+    */
+  def setLibraryPath(): Unit = {
+    val oldpath = System.getProperty("java.library.path")
+    System.setProperty("java.library.path", oldpath + ":" + Resources.resourcePath("native"))
+    val fieldSysPath: Field = classOf[ClassLoader].getDeclaredField("sys_paths")
+    fieldSysPath.setAccessible(true)
+    fieldSysPath.set(null, null)
+    println(System.getProperty("java.library.path"))
   }
 
-  override def top = new MainFrame {
-    title = "Not Pokémon Go"
-    minimumSize = new Dimension(640, 480)
-    contents = new FlowPanel (
-      exitButton
-    )
-    centerOnScreen
-  }
-
-  override def main(args: Array[String]): Unit = {
-    println("POCA client started!")
-
-    startup(args)
+  def main(args: Array[String]) {
+    setLibraryPath()
+    new AppGameContainer(new StateGame(), 800, 700, false).start()
   }
 }

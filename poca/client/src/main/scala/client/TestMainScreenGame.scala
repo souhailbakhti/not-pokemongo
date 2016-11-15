@@ -1,4 +1,6 @@
-import org.scalatest.{ FlatSpec, Matchers }
+package client
+
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestMainScreenGame extends FlatSpec
     with Matchers {

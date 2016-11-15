@@ -1,4 +1,4 @@
-
+package client
 
 trait Subject {
   def add()

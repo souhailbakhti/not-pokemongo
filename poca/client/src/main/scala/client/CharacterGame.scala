@@ -1,17 +1,9 @@
+package client
 
-
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick._
 import org.newdawn.slick.tiled.TiledMap;
 
-class CharacterGame extends BasicGame("Lesson 3 :: CharacterGame") {
+class CharacterGame extends BasicGame("client.CharacterGame") {
 
   private var container: GameContainer = _
 
@@ -29,8 +21,8 @@ class CharacterGame extends BasicGame("Lesson 3 :: CharacterGame") {
 
   override def init(container: GameContainer) {
     this.container = container
-    this.map = new TiledMap("src/exemple.tmx")
-    val spriteSheet = new SpriteSheet("src/character.png", 64, 64)
+    this.map = new TiledMap(Resources.resourcePath("exemple.tmx"))
+    val spriteSheet = new SpriteSheet(Resources.resourcePath("character.png"), 64, 64)
     this.animations(0) = loadAnimation(spriteSheet, 0, 1, 0)
     this.animations(1) = loadAnimation(spriteSheet, 0, 1, 1)
     this.animations(2) = loadAnimation(spriteSheet, 0, 1, 2)

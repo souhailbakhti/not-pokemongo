@@ -1,5 +1,7 @@
-import org.newdawn.slick.state.StateBasedGame
+package client
+
 import org.newdawn.slick.GameContainer
+import org.newdawn.slick.state.StateBasedGame
 
 class StateGame extends StateBasedGame("NotPokemonGo") {
 

@@ -1,4 +1,4 @@
-
+package client
 
 abstract class State {
   var player:Player
