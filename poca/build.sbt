@@ -1,8 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "Not Pokémon Go",
   version := "1.0",
-  scalaVersion := "2.11.8",
-  libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.11" % "1.0.2"
+  scalaVersion := "2.11.8"
 )
 
 lazy val poca = (project in file("."))
@@ -18,7 +17,10 @@ lazy val client = (project in file("client"))
     .settings(
       name := "poca-client",
       mainClass in assembly := Some("client.Main"),
-      assemblyJarName in assembly := "poca-client.jar"
+      assemblyJarName in assembly := "poca-client.jar",
+      libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.11" % "1.0.2",
+      libraryDependencies += "org.slick2d" % "slick2d-core" % "1.0.2",
+      libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0"
     )
 
 lazy val server = (project in file("server"))
