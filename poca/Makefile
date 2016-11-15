@@ -22,3 +22,6 @@ run-client: client
 
 run-server: server
 	java -jar install/server/poca-server.jar
+
+clean:
+	rm -rf install
