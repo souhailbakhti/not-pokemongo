@@ -1,3 +1,4 @@
 target/
+install/
 .idea/
 .DS_Store
