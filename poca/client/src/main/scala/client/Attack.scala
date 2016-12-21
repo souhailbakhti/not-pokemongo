@@ -9,9 +9,9 @@ class Attack(move: String) {
   
   def damage(enemy: Monster): Int = move match {
     case "tail whip" => {
-      if(enemy.currAttack <= 0) printAttackNoEffect()
+      if(enemy.curAttack <= 0) printAttackNoEffect()
       else {
-        enemy.currAttack -=1;
+        enemy.curAttack -=1;
         println(" attack has been lowred -1 to the enemy");
       }
       0
@@ -49,6 +49,16 @@ class Attack(move: String) {
         3
       }
   }
-}
+    case "Peck" => 4
+    case "Pursuit" => 4
+    case "Tackle" => 5
+    case "Quick Attack" => 6
+    case "Dig" => 7
+    case "Ember" => 5
+    case "Scratch" => 7
+    case "Icy Wind" => 6
+    case "Thundershock" => 5
+    case "Water Gun" => 7
+  }
 }
   
