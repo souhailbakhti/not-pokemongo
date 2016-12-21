@@ -41,6 +41,14 @@ class Attack(move: String) {
       }
       0
     } 
+   case "Fire Spin" => {
+      if (enemy.statusEffect == 2) 4
+      else {
+        enemy.statusEffect = 2
+        println("enemy has been burned")
+        3
+      }
   }
+}
 }
   
