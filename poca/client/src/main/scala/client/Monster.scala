@@ -107,6 +107,18 @@ object Monster {
           "Icy Wind", "Scratch", "Dig", "Growl")
        
       }
+      // bulbaseur
+      case 4 => {
+        setStats(monster, "Bulbaseur", 5, n,
+          ImageUtils.createImage(battler("04b")),
+          ImageUtils.createImage(battler("04")),
+          ImageUtils.createImage(battler("04sb")),
+          ImageUtils.createImage(battler("04s")),
+          ImageUtils.createImage(icon("04")),
+          20, 15, 200, 0, 18, 20, 20, 20, 40, 10,
+          "Icy Wind", "Ember", "Tail Whip", "Growl")
+       
+      }
     }
     monster
   }
