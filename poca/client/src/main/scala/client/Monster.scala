@@ -217,4 +217,18 @@ class Monster {
     exp = math.pow(level, 3)
   }
   
+  def stabilizeStatus(): Unit = {
+    statusEffect match {
+      case 4 => println("has woken up.")
+      case 5 => println("has broken free from the ice.")
+    }
+    statusEffect = 0
+  }
+
+  def reiterateStatus(): Unit = {
+    statusEffect match {
+      case 4 => println("is still asleep.")
+      case 5 => println("name is frozen solid.")
+    }
+  
 }
