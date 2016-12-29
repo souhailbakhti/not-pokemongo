@@ -8,9 +8,20 @@ object Monster {
   private var normal = 0
   private var fire = 1
   private var water = 2
-  private var electric = 3
-  private var ice = 4
-  private var dragon = 5
+  private var grass = 3
+  private var electric = 4
+  private var ice = 5
+  private var fighting = 6
+  private var poison = 7
+  private var ground = 8
+  private var flying = 9
+  private var psychic = 10
+  private var bug = 11
+  private var rock = 12
+  private var ghost = 13
+  private var dragon = 14
+  private var dark = 15
+  private var steel = 16
  
   val statusUnaffected = 0
   val statusParalyzed = 1
