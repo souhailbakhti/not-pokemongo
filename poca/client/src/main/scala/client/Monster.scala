@@ -38,8 +38,6 @@ object Monster {
   lazy val statusFRZ = ImageUtils.createImage("Graphic/Images/StatusFRZ.png")
 
   def create(n: Int): Monster = {
-    def battler(num: String) = s"Graphics/Battlers/${num}.png"
-    def icon(num: String) = s"Graphics/Icons/icon${num}.png"
     val monster = new Monster
     def setStats(monster: Monster,
                  name: String,
