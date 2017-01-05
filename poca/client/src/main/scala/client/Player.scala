@@ -11,6 +11,7 @@ class Player(private var map: Map) extends Character{
   private var moving: Boolean = false
   var currentState:State =_
   var vie:Int=0
+  var PokemonOwned = 1
   
   
   private var animations: Array[Animation] = new Array[Animation](8)
