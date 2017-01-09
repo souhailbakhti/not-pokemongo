@@ -8,20 +8,7 @@ object Monster {
   private var normal = 0
   private var fire = 1
   private var water = 2
-  private var grass = 3
-  private var electric = 4
-  private var ice = 5
-  private var fighting = 6
-  private var poison = 7
-  private var ground = 8
-  private var flying = 9
-  private var psychic = 10
-  private var bug = 11
-  private var rock = 12
-  private var ghost = 13
-  private var dragon = 14
-  private var dark = 15
-  private var steel = 16
+  private var electric = 3
  
   val statusUnaffected = 0
   val statusParalyzed = 1
@@ -40,16 +27,11 @@ object Monster {
   def create(n: Int): Monster = {
     val monster = new Monster
     def battler(num: String) = s"Graphics/Battlers/${num}.png"
-    def icon(num: String) = s"Graphics/Icons/icon${num}.png"
     def setStats(monster: Monster,
                  name: String,
                  level: Int,
                  number: Int,
-                 backSprite: Image,
                  frontSprite: Image,
-                 backSpriteShiny: Image,
-                 frontSpriteShiny: Image,
-                 partyIcon: Image,
                  pv: Int,
                  curPv: Int,
                  exp: Int,
@@ -87,47 +69,23 @@ object Monster {
       // create pikachu
       case 1 => {
         setStats(monster, "Pickachu", 5, n,
-          ImageUtils.createImage(battler("01b")),
           ImageUtils.createImage(battler("01")),
-          ImageUtils.createImage(battler("01sb")),
-          ImageUtils.createImage(battler("01s")),
-          ImageUtils.createImage(icon("01")),
           23, 23, 200, 0, 12, 12, 10, 10, 40, 10,
-          "Thundershock", "Quick Attack", "Tail Whip", "Thunderwave")
+          "Escalade", "Attraction", "Clonage", "Coupe-Vent")
       }
       // Charmander
       case 2 => {
         setStats(monster, "Charmander", 5, n,
-          ImageUtils.createImage(battler("02b")),
           ImageUtils.createImage(battler("04")),
-          ImageUtils.createImage(battler("02sb")),
-          ImageUtils.createImage(battler("02s")),
-          ImageUtils.createImage(icon("02")),
           20, 20, 200, 0, 14, 14, 15, 15, 40, 10,
-          "Ember", "Scratch", "Tail Whip", "Fire Spin")
-      }
-      // Swinub
-      case 3 => {
-        setStats(monster, "Swinub", 3, n,
-          ImageUtils.createImage(battler("03b")),
-          ImageUtils.createImage(battler("03")),
-          ImageUtils.createImage(battler("03sb")),
-          ImageUtils.createImage(battler("03s")),
-          ImageUtils.createImage(icon("03")),
-          15, 15, 200, 0, 15, 15, 20, 20, 40, 10,
-          "Icy Wind", "Scratch", "Dig", "Growl")
-       
+          "Picancon", "Retour", "Bluff", "Attraction")
       }
       // bulbaseur
-      case 4 => {
+      case 3 => {
         setStats(monster, "Bulbaseur", 5, n,
-          ImageUtils.createImage(battler("04b")),
           ImageUtils.createImage(battler("04")),
-          ImageUtils.createImage(battler("04sb")),
-          ImageUtils.createImage(battler("04s")),
-          ImageUtils.createImage(icon("04")),
           20, 15, 200, 0, 18, 20, 20, 20, 40, 10,
-          "Icy Wind", "Ember", "Tail Whip", "Growl")
+          "Clonage", "Gaz Toxic", "Escalade", "Mania")
        
       }
     }

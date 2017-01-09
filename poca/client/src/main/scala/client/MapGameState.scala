@@ -17,6 +17,7 @@ class MapGameState extends BasicGameState {
   private var xCamera: Float =_
 
   private var yCamera: Float =_
+  
 
   def notifyOberver() {}
 
@@ -28,7 +29,7 @@ class MapGameState extends BasicGameState {
     player = new Player(map)
     this.map.init()
     this.player.init()
-    xCamera=player.getX
+    xCamera=player.getX  
     yCamera= player.getY
     var controller: PlayerController = new PlayerController(this.player);
     container.getInput().addKeyListener(controller);
@@ -101,6 +102,9 @@ class MapGameState extends BasicGameState {
     }
   }
   override def getID(): Int = ID
+    Monster.create(1)
+    Monster.create(2)
+    Monster.create(3)
 }
 
   

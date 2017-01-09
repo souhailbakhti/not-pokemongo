@@ -5,60 +5,60 @@ class Attack(move: String) {
   var pp: Int = 10;
   var CurrentPP: Int= pp;
   
-  def printAttackNoEffect() = println("No Effect bro");
+  def printAttackNoEffect() = println("Pas deffet bro");
   
   def damage(enemy: Monster): Int = move match {
-    case "tail whip" => {
+    case "Escalade" => {
       if(enemy.curAttack <= 0) printAttackNoEffect()
       else {
         enemy.curAttack -=1;
-        println(" attack has been lowred -1 to the enemy");
+        println(" attaque a causer -1 a lennemi");
       }
       0
     }
-    case "Growl" => {
+    case "Picancon" => {
       if (enemy.curAttack <= 0) printAttackNoEffect()
       else {
         enemy.curAttack -= 1
-        println("attack has been lowred -1 to the enemy")
+        println("attaque a causer -1 a lennemi")
       }
       0
     }
-    case "Toxic" => {
+    case "Gaz Toxic" => {
       if (enemy.statusEffect == 3) printAttackNoEffect()
       else {
         enemy.statusEffect = 3
-        println("ennemy has been poisoned")
+        println("Un nuage de gaz toxique est projeté au visage de l’ennemi. Peut l’empoisonner.")
       }
       0
       }
     
-   case "Sleep Powder" => {
+   case "Lovely kiss" => {
       if (enemy.statusEffect == 4) printAttackNoEffect()
       else {
         enemy.statusEffect = 4
-        println("enemy has fallen asleep")
+        println("fait un bisou à l’ennemi en prenant une mine effrayante. Endort l’ennemi.")
       }
       0
     } 
-   case "Fire Spin" => {
+   case "Triplattaque" => {
       if (enemy.statusEffect == 2) 4
       else {
         enemy.statusEffect = 2
-        println("enemy has been burned")
+        println("envoie trois boules d’énergie simultanément. Peut aussi paralyser, brûler ou geler l’ennemi.")
         3
       }
   }
-    case "Peck" => 4
-    case "Pursuit" => 4
-    case "Tackle" => 5
-    case "Quick Attack" => 6
-    case "Dig" => 7
-    case "Ember" => 5
-    case "Scratch" => 7
-    case "Icy Wind" => 6
-    case "Thundershock" => 5
-    case "Water Gun" => 7
+    case "Retour" => 4
+    case "Attraction" => 4
+    case "Fléau" => 5
+    case "Lire-Esprit" => 6
+    case "Clonage" => 7
+    case "Bluff" => 5
+    case "Mania" => 7
+    case "Berceuse" => 6
+    case "Coupe-Vent" => 5
+    case "Griffe" => 7
   }
 }
   
