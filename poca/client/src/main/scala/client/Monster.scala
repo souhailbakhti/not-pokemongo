@@ -39,6 +39,8 @@ object Monster {
 
   def create(n: Int): Monster = {
     val monster = new Monster
+    def battler(num: String) = s"Graphics/Battlers/${num}.png"
+    def icon(num: String) = s"Graphics/Icons/icon${num}.png"
     def setStats(monster: Monster,
                  name: String,
                  level: Int,
