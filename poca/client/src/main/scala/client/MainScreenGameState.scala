@@ -1,45 +1,38 @@
 package client
 
-import org.lwjgl.input.Mouse
-import org.newdawn.slick.{GameContainer, Graphics, Image}
+import org.newdawn.slick.gui.{AbstractComponent, ComponentListener, TextField}
+import org.newdawn.slick._
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
+import StateGame.States
 
-class MainScreenGameState extends BasicGameState {
-  var playNow: Image = _
-  var exitGame: Image = _
-
-  private val ID = 1
+class MainScreenGameState extends SaneGameState(States.MainMenu) {
+  var login: TextButton = _
+  var register: TextButton = _
+  var quit: TextButton = _
 
   override def init(container: GameContainer, game: StateBasedGame) {
-    playNow = new Image(Resources.resourcePath("play.png"))
-    exitGame = new Image(Resources.resourcePath("exit.png"))
-
+    login = new TextButton(container, "Login", 400, 300, new ComponentListener() {
+      def componentActivated(source: AbstractComponent): Unit = {
+        game.enterState(States.LoginScreen.id)
+      }
+    })
+    register = new TextButton(container, "Register", 400, 350, new ComponentListener() {
+      def componentActivated(source: AbstractComponent): Unit = {
+        game.enterState(States.RegisterScreen.id)
+      }
+    })
+    quit = new TextButton(container, "Quit", 400, 400, new ComponentListener() {
+      def componentActivated(source: AbstractComponent): Unit = {
+        System.exit(0)
+      }
+    })
+    registerInputSinks(login, register, quit)
   }
 
   override def render(container: GameContainer, game: StateBasedGame, g: Graphics) {
     g.drawString("Welcome to NotPokemonGo", 300, 100)
-    playNow.draw(250, 250)
-    exitGame.draw(100, 300)
+    login.render(container, g)
+    register.render(container, g)
+    quit.render(container, g)
   }
-  override def update(container: GameContainer, game: StateBasedGame, delta: Int) {
-    var posX: Int = Mouse.getX()
-    var posY: Int = Mouse.getY()
-
-    if ((posX > 300 && posX < 500) && (posY > 350 && posY < 420)) {
-      if (Mouse.isButtonDown(0)) {
-        game.enterState(2)
-      }
-    }
-    if ((posX > 300 && posX < 500) && (posY >150  && posY < 200)) {
-      if (Mouse.isButtonDown(0)) {
-        System.exit(0)
-      }
-    }
-
-  }
-
-  override def keyReleased(key: Int, c: Char) {
-  }
-
-  override def getID(): Int = ID
 }

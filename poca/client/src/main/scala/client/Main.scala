@@ -1,10 +1,6 @@
 package client
 
-import java.io.File
 import java.lang.reflect.Field
-import java.net.URLDecoder
-import java.nio.file.{Files, Paths}
-
 import org.newdawn.slick.AppGameContainer
 
 object Main {
@@ -22,6 +18,6 @@ object Main {
 
   def main(args: Array[String]) {
     setLibraryPath()
-    new AppGameContainer(new StateGame(), 800, 700, false).start()
+    new AppGameContainer(StateGame, 800, 700, false).start()
   }
 }

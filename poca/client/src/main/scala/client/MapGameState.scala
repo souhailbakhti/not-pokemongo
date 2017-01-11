@@ -2,9 +2,10 @@ package client
 
 import org.newdawn.slick.{GameContainer, Graphics, Music}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
+import StateGame.States
 
 class MapGameState extends BasicGameState {
-  private val ID = 2
+  private val ID = States.MapView.id
 
   private var container: GameContainer = _
 
