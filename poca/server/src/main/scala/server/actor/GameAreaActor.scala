@@ -2,7 +2,7 @@ package server.actor
 
 import akka.actor.{Actor, ActorRef}
 import server.PositionCalculator
-
+import scala.io.StdIn
 
 trait GameEvent
 case class PlayerJoined(player: Player,actorRef: ActorRef) extends GameEvent
@@ -15,6 +15,7 @@ case class PlayerWithActor(player: Player,actor: ActorRef)
 case class Position(x:Int,y:Int) {
   def + (other: Position) : Position = {
     Position(x+other.x,y+other.y)
+
   }
 }
 
@@ -25,8 +26,9 @@ class GameAreaActor extends Actor {
 
   override def receive: Receive = {
     case PlayerJoined(player,actor) => {
-      val newPlayer = Player(player.name,PositionCalculator.findClosestAvailable(Position(0,0),takenPositions))
+      val newPlayer = Player(player.name,Position(300,300))
       players += (player.name -> PlayerWithActor(newPlayer,actor))
+      println(players.values.toList.toString())
       notifyPlayersChanged()
     }
     case PlayerLeft(playerName) => {
@@ -34,6 +36,7 @@ class GameAreaActor extends Actor {
       notifyPlayersChanged()
     }
     case PlayerMoveRequest(playerName,direction) => {
+      println(playerName+":"+direction)
       val offset = direction match {
         case "up" => Position(0,1)
         case "down" => Position(0,-1)
@@ -42,7 +45,7 @@ class GameAreaActor extends Actor {
       }
       val oldPlayerWithActor = players(playerName)
       val oldPlayer = oldPlayerWithActor.player
-      val newPosition = oldPlayer.position + offset
+       val newPosition = oldPlayer.position + offset
       if (!takenPositions.contains(newPosition)) {
         val actor = oldPlayerWithActor.actor
         players(playerName) = PlayerWithActor(Player(playerName,newPosition),actor)

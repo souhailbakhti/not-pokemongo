@@ -1,9 +1,14 @@
 package client
 
-import org.newdawn.slick.{GameContainer, Graphics, Music}
+import akka.actor.ActorSystem
+import akka.stream.scaladsl.{Sink, Source}
+import akka.stream.{ActorMaterializer, OverflowStrategy}
+import org.newdawn.slick.{Color, GameContainer, Graphics, Music}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
-class MapGameState extends BasicGameState {
+import concurrent.ExecutionContext.Implicits.global
+
+class MapGameState(name:String) extends BasicGameState {
   private val ID = 2
 
   private var container: GameContainer = _
@@ -14,6 +19,7 @@ class MapGameState extends BasicGameState {
 
   private var player: Player = _
 
+
   private var xCamera: Float =_
 
   private var yCamera: Float =_
@@ -21,16 +27,24 @@ class MapGameState extends BasicGameState {
   def notifyOberver() {}
 
   override def init(container: GameContainer, game: StateBasedGame) {
+    implicit val system = ActorSystem()
+    implicit val materializer = ActorMaterializer()
+    val client = new Client(name)
     this.container = container
     var sceneFactory: SceneFactory = new ScenePrincipaleFactory()
     this.map = sceneFactory.createMap
     music = sceneFactory.createMusic
-    player = new Player(map)
+    player= new Player(map)
+
     this.map.init()
+    val input = Source.actorRef[String](5,OverflowStrategy.dropNew)
     this.player.init()
-    xCamera=player.getX
-    yCamera= player.getY
-    var controller: PlayerController = new PlayerController(this.player);
+
+    val output=this.player.sink
+    val ((inputMat,result),outputMat) = client.run(input,output)
+    xCamera=player.getX()
+    yCamera= player.getY()
+    var controller: PlayerController = new PlayerController(this.player,inputMat);
     container.getInput().addKeyListener(controller);
     music.loop()
   }
