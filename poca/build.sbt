@@ -38,7 +38,7 @@ lazy val server = (project in file("server"))
     .settings(commonSettings: _*)
     .settings(
       name := "poca-server",
-      mainClass in assembly := Some("server.Main"),
+      mainClass in assembly := Some("server.Server"),
       assemblyJarName in assembly := "poca-server.jar",
       libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream" % akkaV,
