@@ -6,6 +6,7 @@ import akka.stream.{ActorMaterializer, OverflowStrategy}
 import org.newdawn.slick.{Color, GameContainer, Graphics, Music}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
+
 import concurrent.ExecutionContext.Implicits.global
 
 class MapGameState(name:String) extends BasicGameState {
@@ -19,7 +20,7 @@ class MapGameState(name:String) extends BasicGameState {
 
   private var player: Player = _
 
-
+  private var playerM: List[Player] = _
   private var xCamera: Float =_
 
   private var yCamera: Float =_
@@ -34,31 +35,66 @@ class MapGameState(name:String) extends BasicGameState {
     var sceneFactory: SceneFactory = new ScenePrincipaleFactory()
     this.map = sceneFactory.createMap
     music = sceneFactory.createMusic
-    player= new Player(map)
-
+    player= new Player(map,name,new Position(200,200))
+    playerM=Nil
+    playerM=player::playerM
     this.map.init()
     val input = Source.actorRef[String](5,OverflowStrategy.dropNew)
     this.player.init()
 
-    val output=this.player.sink
+    val output=this.sink
     val ((inputMat,result),outputMat) = client.run(input,output)
     xCamera=player.getX()
     yCamera= player.getY()
-    var controller: PlayerController = new PlayerController(this.player,inputMat);
-    container.getInput().addKeyListener(controller);
+
+      var controller: PlayerController = new PlayerController(this.player, inputMat);
+      container.getInput().addKeyListener(controller);
+
     music.loop()
   }
 
+  def sink = Sink.foreach[List[Player1]] { playerPositions=>
+    val playersShapes = playerPositions.map(player => {
+      var x:Boolean=false
+      println(player.position.y)
+      println(player.position.x)
+      for (playerx <- playerM) {
+        if (playerx.playerName.equals(player.name)) {
+          println("found user")
+          x = true
+          if (!this.player.getName().equals(player.getName())) {
+            playerx.setX(player.position.x)
+            playerx.setY(player.position.y)
+          }
+        }
+
+        if (x == false) {
+          println("new player"+ "\t" + player.name)
+          var player1 = new Player(map, player.name,player.position)
+          print(player1.getX()+",")
+          println(player1.getY())
+          player1.init()
+          playerM = player1 :: playerM
+          for (playerx <- playerM) { println(this.player.getName()+"\t" +playerx.playerName)}
+          print(player1.getX()+",")
+          println(player1.getY())
+        }
+
+
+    })
+  }
   override def render(container: GameContainer, game: StateBasedGame, g: Graphics) {
     g.translate(container.getWidth / 2 - xCamera.toInt, container.getHeight / 2 - yCamera.toInt)
     this.map.renderBackground()
-    this.player.render(g)
+    //this.player.render(g)
+    for (player1 <- playerM) player1.render(g)
     this.map.renderForeground()
   }
 
   override def update(container: GameContainer, game: StateBasedGame, delta: Int) {
     updateTrigger()
-    this.player.update(delta)
+    //this.player.update(delta)
+    for (player1 <- playerM) player1.update(delta)
     updateCamera(container)
   }
 

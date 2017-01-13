@@ -3,17 +3,17 @@ package client
 import akka.stream.scaladsl.Sink
 import org.newdawn.slick.{Animation, Color, Graphics, SpriteSheet}
 
-class Player(private var map: Map) extends Character{
+class Player(private var map: Map,private var name: String,private var position:Position) extends Character{
 
-  private var x: Float = 300
-  private var y: Float = 300
+  private var x: Float = position.x
+  private var y: Float = position.y
   private var direction: Int = 2
   private var onStair: Boolean = false
   private var moving: Boolean = false
   var currentState:State =_
   var vie:Int=0
   var PokemonOwned = 1
-  var playerName : String=""
+  var playerName : String=name
   
   private var animations: Array[Animation] = new Array[Animation](8)
 
@@ -29,13 +29,7 @@ class Player(private var map: Map) extends Character{
     this.animations(6) = loadAnimation(spriteSheet, 1, 9, 2)
     this.animations(7) = loadAnimation(spriteSheet, 1, 9, 3)
   }
-  def sink = Sink.foreach[List[Player1]] { playerPositions=>
-    val playersShapes = playerPositions.map(player => {
-        print(player.position.x+",")
-        println(player.position.y)
 
-              })
-    }
   //set spriteSheet 
   private def loadAnimation(spriteSheet: SpriteSheet,
                             startX: Int,
@@ -106,7 +100,7 @@ class Player(private var map: Map) extends Character{
   }
 
   def getY(): Float = y
-
+  def getName(): String = playerName
   def setY(y: Float) {
     this.y = y
   }
