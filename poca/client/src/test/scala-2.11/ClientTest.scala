@@ -4,8 +4,9 @@ import akka.stream.testkit.scaladsl.TestSink
 import akka.stream.{ActorMaterializer, OverflowStrategy}
 import client.Client
 import client.{Player1, Position}
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.{FunSuite, Ignore, Matchers}
 
+@Ignore
 class ClientTest extends FunSuite with Matchers {
 
   test("should be able to login player") {
