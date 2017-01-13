@@ -47,18 +47,19 @@ class MapGameState() extends BasicGameState {
       implicit val system = ActorSystem()
       implicit val materializer = ActorMaterializer()
       val name = StateGame.getPlayerName
-      player = new Player(map,name,new Position(200,200))
+      player = new Player(map, name, Position(200,200))
       this.player.init()
       playerM=player::playerM
 
       val input = Source.actorRef[String](5,OverflowStrategy.dropNew)
       val client = new Client(name)
-      val output=this.sink
-      val ((inputMat,result),outputMat) = client.run(input,output)
+      val output = this.sink
+      val ((inputMat, result), outputMat) = client.run(input, output)
       serverActorRef = inputMat
+      player.sendPos(serverActorRef)
 
-      xCamera=player.getX()
-      yCamera= player.getY()
+      xCamera = player.getX()
+      yCamera = player.getY()
 
       var controller: PlayerController = new PlayerController(this.player, inputMat)
       container.getInput.addKeyListener(controller)
@@ -114,7 +115,7 @@ class MapGameState() extends BasicGameState {
     if (posUpdateTimer % 6 == 0) {
       posUpdateTimer = 0
       if (player.isMoving())
-        serverActorRef ! ("pos "+player.getX()+" "+player.getY())
+        player.sendPos(serverActorRef)
     }
     for (player1 <- playerM) player1.update(delta)
     updateCamera(container)

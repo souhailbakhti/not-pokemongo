@@ -16,10 +16,12 @@ class GameService(implicit val actorSystem : ActorSystem, implicit  val actorMat
 
   val gameAreaActor = actorSystem.actorOf(Props(new GameAreaActor()))
   val playerActorSource = Source.actorRef[GameEvent](5,OverflowStrategy.fail)
+
   def flow(playerName: String): Flow[Message, Message, Any] = Flow.fromGraph(GraphDSL.create(playerActorSource){ implicit builder => playerActor =>
     import GraphDSL.Implicits._
 
-    val materialization = builder.materializedValue.map(playerActorRef => PlayerJoined(Player(playerName,Position(0,0)),playerActorRef))
+    val materialization = builder.materializedValue.map(playerActorRef =>
+      PlayerJoined(Player(playerName,Position(0,0)), playerActorRef))
     val merge = builder.add(Merge[GameEvent](2))
 
     val messagesToGameEventsFlow = builder.add(Flow[Message].collect {

@@ -1,9 +1,14 @@
 package client
 
+import akka.actor.ActorRef
 import akka.stream.scaladsl.Sink
 import org.newdawn.slick.{Animation, Color, Graphics, SpriteSheet}
 
 class Player(private var map: Map,private var name: String,private var position:Position) extends Character{
+  def sendPos(serverActorRef: ActorRef) = {
+    serverActorRef ! ("pos "+getX()+" "+getY())
+  }
+
 
   private var x: Float = position.x
   private var y: Float = position.y

@@ -26,7 +26,7 @@ class GameAreaActor extends Actor {
 
   override def receive: Receive = {
     case PlayerJoined(player,actor) => {
-      val newPlayer = Player(player.name,Position(300,300))
+      val newPlayer = Player(player.name, player.position)
       players += (player.name -> PlayerWithActor(newPlayer,actor))
       println(players.values.toList.toString())
       notifyPlayersChanged()
