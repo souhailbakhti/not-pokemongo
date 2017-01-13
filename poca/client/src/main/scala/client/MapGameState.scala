@@ -9,8 +9,9 @@ import StateGame.States
 
 import concurrent.ExecutionContext.Implicits.global
 
-class MapGameState(name: String) extends BasicGameState {
+class MapGameState() extends BasicGameState {
   private val ID = States.MapView.id
+  private var loggedIn = false
 
   private var container: GameContainer = _
   private var serverActorRef: ActorRef = _
@@ -30,30 +31,40 @@ class MapGameState(name: String) extends BasicGameState {
   def notifyOberver() {}
 
   override def init(container: GameContainer, game: StateBasedGame) {
-    implicit val system = ActorSystem()
-    implicit val materializer = ActorMaterializer()
-    val client = new Client(name)
     this.container = container
     var sceneFactory: SceneFactory = new ScenePrincipaleFactory()
     this.map = sceneFactory.createMap
     music = sceneFactory.createMusic
-    player= new Player(map,name,new Position(200,200))
     playerM=Nil
-    playerM=player::playerM
     this.map.init()
-    val input = Source.actorRef[String](5,OverflowStrategy.dropNew)
-    this.player.init()
-
-    val output=this.sink
-    val ((inputMat,result),outputMat) = client.run(input,output)
-    serverActorRef = inputMat
-    xCamera=player.getX()
-    yCamera= player.getY()
-
-    var controller: PlayerController = new PlayerController(this.player, inputMat)
-    container.getInput.addKeyListener(controller)
 
     music.loop()
+  }
+
+  override def enter(container: GameContainer, game: StateBasedGame): Unit = {
+    super.enter(container, game)
+    if (!loggedIn) {
+      implicit val system = ActorSystem()
+      implicit val materializer = ActorMaterializer()
+      val name = StateGame.getPlayerName
+      player = new Player(map,name,new Position(200,200))
+      this.player.init()
+      playerM=player::playerM
+
+      val input = Source.actorRef[String](5,OverflowStrategy.dropNew)
+      val client = new Client(name)
+      val output=this.sink
+      val ((inputMat,result),outputMat) = client.run(input,output)
+      serverActorRef = inputMat
+
+      xCamera=player.getX()
+      yCamera= player.getY()
+
+      var controller: PlayerController = new PlayerController(this.player, inputMat)
+      container.getInput.addKeyListener(controller)
+
+      loggedIn = true
+    }
   }
 
   def sink = {println("Received sink"); Sink.foreach[List[Player1]] { playerPositions =>

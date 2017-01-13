@@ -22,6 +22,9 @@ class LoginScreenState extends SaneGameState(States.LoginScreen) {
     })
     login = new TextButton(container, "Login", 450, 400, new ComponentListener() {
       def componentActivated(source: AbstractComponent): Unit = {
+        if (nameField.getText.isEmpty || passwordField.getText.isEmpty)
+          return
+        StateGame.setPlayerName(nameField.getText)
         game.enterState(States.MapView.id)
       }
     })
