@@ -1,17 +1,20 @@
 package client
 
-import akka.actor.ActorSystem
+import akka.actor.{ActorRef, ActorSystem}
 import akka.stream.scaladsl.{Sink, Source}
 import akka.stream.{ActorMaterializer, OverflowStrategy}
 import org.newdawn.slick.{Color, GameContainer, Graphics, Music}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 import StateGame.States
+
 import concurrent.ExecutionContext.Implicits.global
 
 class MapGameState(name: String) extends BasicGameState {
   private val ID = States.MapView.id
 
   private var container: GameContainer = _
+  private var serverActorRef: ActorRef = _
+  private var posUpdateTimer: Int = 0
 
   private var map: Map = _
 
@@ -43,29 +46,31 @@ class MapGameState(name: String) extends BasicGameState {
 
     val output=this.sink
     val ((inputMat,result),outputMat) = client.run(input,output)
+    serverActorRef = inputMat
     xCamera=player.getX()
     yCamera= player.getY()
 
-      var controller: PlayerController = new PlayerController(this.player, inputMat);
-      container.getInput().addKeyListener(controller);
+    var controller: PlayerController = new PlayerController(this.player, inputMat)
+    container.getInput.addKeyListener(controller)
 
     music.loop()
   }
 
-  def sink = Sink.foreach[List[Player1]] { playerPositions =>
-    val playersShapes = playerPositions.map(player => {
+  def sink = {println("Received sink"); Sink.foreach[List[Player1]] { playerPositions =>
+    playerPositions.map(player => {
       var x: Boolean = false
       println(player.position.y)
       println(player.position.x)
       for (playerx <- playerM) {
         if (playerx.playerName.equals(player.name)) {
-          println("found user")
+          println("found user " + player.name)
           x = true
           if (!this.player.getName().equals(player.name)) {
             playerx.setX(player.position.x)
             playerx.setY(player.position.y)
           }
         }
+      }
 
         if (!x) {
           println("new player" + "\t" + player.name)
@@ -80,9 +85,8 @@ class MapGameState(name: String) extends BasicGameState {
           print(player1.getX() + ",")
           println(player1.getY())
         }
-      }
     })
-  }
+  }}
 
   override def render(container: GameContainer, game: StateBasedGame, g: Graphics) {
     g.translate(container.getWidth / 2 - xCamera.toInt, container.getHeight / 2 - yCamera.toInt)
@@ -95,6 +99,12 @@ class MapGameState(name: String) extends BasicGameState {
   override def update(container: GameContainer, game: StateBasedGame, delta: Int) {
     updateTrigger()
     //this.player.update(delta)
+    posUpdateTimer+=1
+    if (posUpdateTimer % 6 == 0) {
+      posUpdateTimer = 0
+      if (player.isMoving())
+        serverActorRef ! ("pos "+player.getX()+" "+player.getY())
+    }
     for (player1 <- playerM) player1.update(delta)
     updateCamera(container)
   }

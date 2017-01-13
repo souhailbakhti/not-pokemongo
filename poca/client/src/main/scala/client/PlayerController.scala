@@ -21,22 +21,18 @@ class PlayerController(private var player: Player,keyboardEventsReceiver: ActorR
     case Input.KEY_UP =>
       this.player.setDirection(0)
       this.player.setMoving(true)
-      keyboardEventsReceiver ! "up"
 
     case Input.KEY_LEFT =>
       this.player.setDirection(1)
       this.player.setMoving(true)
-      keyboardEventsReceiver ! "left"
 
     case Input.KEY_DOWN =>
       this.player.setDirection(2)
       this.player.setMoving(true)
-      keyboardEventsReceiver ! "down"
 
     case Input.KEY_RIGHT =>
       this.player.setDirection(3)
       this.player.setMoving(true)
-      keyboardEventsReceiver ! "right"
     case _ =>
   }
 

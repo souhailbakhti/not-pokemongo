@@ -12,7 +12,7 @@ case class PlayersChanged(players: Iterable[Player]) extends GameEvent
 
 case class Player(name: String,position: Position)
 case class PlayerWithActor(player: Player,actor: ActorRef)
-case class Position(x:Int,y:Int) {
+case class Position(x:Float,y:Float) {
   def + (other: Position) : Position = {
     Position(x+other.x,y+other.y)
 
@@ -37,18 +37,12 @@ class GameAreaActor extends Actor {
     }
     case PlayerMoveRequest(playerName,direction) => {
       println(playerName+":"+direction)
-      val offset = direction match {
-        case "up" => Position(0,1)
-        case "down" => Position(0,-1)
-        case "right" => Position(1,0)
-        case "left" => Position(-1,0)
-      }
-      val oldPlayerWithActor = players(playerName)
-      val oldPlayer = oldPlayerWithActor.player
-       val newPosition = oldPlayer.position + offset
-      if (!takenPositions.contains(newPosition)) {
+      val args = direction.split(" ")
+      if (args.length == 3) {
+        val newPos = Position(args(1).toFloat, args(2).toFloat)
+        val oldPlayerWithActor = players(playerName)
         val actor = oldPlayerWithActor.actor
-        players(playerName) = PlayerWithActor(Player(playerName,newPosition),actor)
+        players(playerName) = PlayerWithActor(Player(playerName, newPos), actor)
         notifyPlayersChanged()
       }
     }

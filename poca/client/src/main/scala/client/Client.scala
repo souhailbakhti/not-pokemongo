@@ -17,7 +17,9 @@ class Client(playerName: String)(implicit val actorSystem: ActorSystem, implicit
   val config = ConfigFactory.defaultApplication()
   private val serverAdress = config.getString("serverAdress")
   val webSocketFlow = Http().webSocketClientFlow(WebSocketRequest(s"ws://$serverAdress/?playerName=$playerName")).collect {
-    case TextMessage.Strict(strMsg) => strMsg.parseJson.convertTo[List[Player1]]
+    case TextMessage.Strict(strMsg) => {
+      strMsg.parseJson.convertTo[List[Player1]]
+    }
   }
 
   def run[M1,M2](input: Source[String, M1], output: Sink[List[Player1],M2]) = {

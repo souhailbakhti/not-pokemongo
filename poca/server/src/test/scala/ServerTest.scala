@@ -16,7 +16,7 @@ class ServerTest extends FunSuite with Matchers with ScalatestRouteTest {
 
   test("should register player") {
     assertWebsocket("John"){ wsClient =>
-      wsClient.expectMessage("[{\"name\":\"John\",\"position\":{\"x\":300,\"y\":300}}]")
+      wsClient.expectMessage("[{\"name\":\"John\",\"position\":{\"x\":300.0,\"y\":300.0}}]")
     }
   }
 
@@ -26,10 +26,10 @@ class ServerTest extends FunSuite with Matchers with ScalatestRouteTest {
     val andrewClient = WSProbe()
 
     WS(s"/?playerName=John", johnClient.flow) ~> gameService.websocketRoute ~> check {
-      johnClient.expectMessage("[{\"name\":\"John\",\"position\":{\"x\":300,\"y\":300}}]")
+      johnClient.expectMessage("[{\"name\":\"John\",\"position\":{\"x\":300.0,\"y\":300.0}}]")
     }
     WS(s"/?playerName=Andrew", andrewClient.flow) ~> gameService.websocketRoute ~> check {
-      andrewClient.expectMessage("[{\"name\":\"John\",\"position\":{\"x\":300,\"y\":300}},{\"name\":\"Andrew\",\"position\":{\"x\":300,\"y\":300}}]")
+      andrewClient.expectMessage("[{\"name\":\"John\",\"position\":{\"x\":300.0,\"y\":300.0}},{\"name\":\"Andrew\",\"position\":{\"x\":300.0,\"y\":300.0}}]")
     }
   }
 
