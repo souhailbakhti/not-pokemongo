@@ -9,9 +9,9 @@ class CharacterGame extends BasicGame("client.CharacterGame") {
 
   private var map: TiledMap = _
 
-  private var x: Float = 300
+  private var x: Float = 0
 
-  private var y: Float = 300
+  private var y: Float = 0
 
   private var direction: Int = 2
 

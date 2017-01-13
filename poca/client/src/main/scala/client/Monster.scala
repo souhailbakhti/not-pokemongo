@@ -9,15 +9,15 @@ object Monster {
   private var fire = 1
   private var water = 2
   private var electric = 3
- 
+
   val statusUnaffected = 0
   val statusParalyzed = 1
   val statusBurned = 2
   val statusPoisoned = 3
   val statusAsleep = 4
   val statusFrozen = 5
-  
-  
+
+
   lazy val statusPAR = ImageUtils.createImage("Graphic/Images/StatusPAR.png")
   lazy val statusBRN = ImageUtils.createImage("Graphic/Images/StatusBRN.png")
   lazy val statusPSN = ImageUtils.createImage("Graphic/Images/StatusPSN.png")
@@ -86,7 +86,7 @@ object Monster {
           ImageUtils.createImage(battler("04")),
           20, 15, 200, 0, 18, 20, 20, 20, 40, 10,
           "Clonage", "Gaz Toxic", "Escalade", "Mania")
-       
+
       }
     }
     monster
@@ -127,20 +127,20 @@ class Monster {
 
   var exp: Double = 0
   var curExp: Double = 0
-  
+
   var move: Attack = null
   var move1 = ""
   var move2 = ""
   var move3 = ""
   var move4 = ""
   var attackDamage: Int = 0
-  
+
   var statusEffect = 0
 
   private var weak = new Array[Boolean](16)
   private var strong = new Array[Boolean](16)
   private var shiny = false
-  
+
   def statusImage(): Image = {
     statusEffect match {
       case Monster.statusParalyzed => Monster.statusPAR
@@ -164,11 +164,11 @@ class Monster {
   def asleep = statusEffect == Monster.statusAsleep
 
   def frozen = statusEffect == Monster.statusFrozen
-  
+
   def losePv(i: Int): Unit = {
     curPv -= i
   }
-  
+
   def healPokemon(): Unit = {
     curPv = pv
     curAttack = attack
@@ -185,7 +185,7 @@ class Monster {
     curExp = 0
     exp = math.pow(level, 3)
   }
-  
+
   def stabilizeStatus(): Unit = {
     statusEffect match {
       case 4 => println("has woken up.")
@@ -199,6 +199,6 @@ class Monster {
       case 4 => println("is still asleep.")
       case 5 => println("name is frozen solid.")
     }
-  
-}
+
+  }
 }

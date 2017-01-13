@@ -1,6 +1,7 @@
 package client
 
 import java.lang.reflect.Field
+import scala.io.StdIn
 import org.newdawn.slick.AppGameContainer
 
 object Main {
