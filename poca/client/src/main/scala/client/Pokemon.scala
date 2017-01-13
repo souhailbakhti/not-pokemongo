@@ -1,6 +1,7 @@
+package client
+
 import org.newdawn.slick.Image
 //import shionn.slick.animation
-
 
 class Pokemon extends Character {
   var vie: Int = 0

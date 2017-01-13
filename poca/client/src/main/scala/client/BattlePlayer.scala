@@ -1,4 +1,4 @@
-
+package client
 
 class BattlePlayer {
   
