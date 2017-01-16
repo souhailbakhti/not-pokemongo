@@ -11,7 +11,7 @@ lazy val poca = (project in file("."))
       name := "poca",
       assemblyJarName in assembly := "poca-common.jar"
     )
-
+val akkaV = "2.4.10"
 lazy val client = (project in file("client"))
     .dependsOn(poca)
     .settings(commonSettings: _*)
@@ -21,16 +21,24 @@ lazy val client = (project in file("client"))
       assemblyJarName in assembly := "poca-client.jar",
       libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.11" % "1.0.2",
       libraryDependencies += "org.slick2d" % "slick2d-core" % "1.0.2",
-      libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0"
+      libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0",
+      libraryDependencies += "com.typesafe.akka" %% "akka-http-core" % akkaV,
+      libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaV,
+      libraryDependencies += "com.typesafe.akka" %% "akka-http-core" % akkaV,
+      libraryDependencies += "com.typesafe.akka" %% "akka-http-testkit" % akkaV,
+      libraryDependencies += "com.typesafe.akka" %% "akka-http-spray-json-experimental" % akkaV,
+      libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % "test"
+
+
     )
-val akkaV = "2.4.10"
+
 lazy val server = (project in file("server"))
 
     .dependsOn(poca)
     .settings(commonSettings: _*)
     .settings(
       name := "poca-server",
-      mainClass in assembly := Some("server.Main"),
+      mainClass in assembly := Some("server.Server"),
       assemblyJarName in assembly := "poca-server.jar",
       libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream" % akkaV,

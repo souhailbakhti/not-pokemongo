@@ -1,8 +1,9 @@
 package client
 
+import akka.actor.ActorRef
 import org.newdawn.slick.{Input, KeyListener}
 
-class PlayerController(private var player: Player) extends KeyListener {
+class PlayerController(private var player: Player,keyboardEventsReceiver: ActorRef) extends KeyListener {
   
   override def setInput(input: Input) {
   }

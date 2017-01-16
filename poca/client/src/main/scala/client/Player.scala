@@ -1,22 +1,28 @@
 package client
 
+import akka.actor.ActorRef
+import akka.stream.scaladsl.Sink
 import org.newdawn.slick.{Animation, Color, Graphics, SpriteSheet}
 
-class Player(private var map: Map) extends Character{
+class Player(private var map: Map,private var name: String,private var position:Position) extends Character{
+  def sendPos(serverActorRef: ActorRef) = {
+    serverActorRef ! ("pos "+getX()+" "+getY())
+  }
 
-  private var x: Float = 300
-  private var y: Float = 300
+
+  private var x: Float = position.x
+  private var y: Float = position.y
   private var direction: Int = 2
   private var onStair: Boolean = false
   private var moving: Boolean = false
   var currentState:State =_
   var vie:Int=0
   var PokemonOwned = 1
-  
+  var playerName : String=name
   
   private var animations: Array[Animation] = new Array[Animation](8)
 
-  
+
   def init() {
     val spriteSheet = new SpriteSheet(Resources.resourcePath("character.png"), 64, 64)
     this.animations(0) = loadAnimation(spriteSheet, 0, 1, 0)
@@ -43,9 +49,11 @@ class Player(private var map: Map) extends Character{
 
   //display window
   def render(g: Graphics) {
+
     g.setColor(new Color(0, 0, 0, .5f))
     g.fillOval(x.toInt - 16, y.toInt - 8, 32, 16)
     g.drawAnimation(animations(direction + (if (moving) 4 else 0)), x.toInt - 32, y.toInt - 60)
+
   }
 
   // update
@@ -97,7 +105,7 @@ class Player(private var map: Map) extends Character{
   }
 
   def getY(): Float = y
-
+  def getName(): String = playerName
   def setY(y: Float) {
     this.y = y
   }
