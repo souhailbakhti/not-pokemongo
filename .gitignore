@@ -2,3 +2,5 @@ target/
 install/
 .idea/
 .DS_Store
+pca/lib/
+*.jar
